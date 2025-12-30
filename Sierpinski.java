@@ -2,7 +2,18 @@
 public class Sierpinski {
 	
 	public static void main(String[] args) {
+		double canvas = 1024.0;
+		StdDraw.setCanvasSize((int) canvas, (int) canvas);
+		StdDraw.setXscale(0 - 0.05 ,1 + 0.05);
+		StdDraw.setYscale(0 -0.05 , 1+ 0.05);
+		StdDraw.setPenRadius(0.001);
+		// StdDraw.point(canvas/2.0, canvas/2.0);
+		StdDraw.show();
+		
+
+		StdDraw.setPenColor(StdDraw.BLACK);
 		sierpinski(Integer.parseInt(args[0]));
+		
 	}
 	
 	// Draws a Sierpinski triangle of depth n on the standard canvass.
@@ -10,32 +21,27 @@ public class Sierpinski {
 		double[] xVertex = { 0.0, 1.0, 0.5 };
 		double[] yVertex = { 0.0, 0.0, 0.866 };
 
-		double x1, x2, x3, y1, y2, y3;
-		x1 = x2 = x3 = y1 = y2 = y3 = 0;
-
-		int r = (int) (Math.random() * 3);
-
-		x1 = x1 + xVertex[r] / 2.0;
-		x2 = x2 + xVertex[r] / 2.0;
-		x3 = x3 + xVertex[r] / 2.0;
-		y1 = y1 + yVertex[r] / 2.0;
-		y2 = y2 + yVertex[r] / 2.0;
-		y3 = y3 + yVertex[r] / 2.0;
-
-		sierpinski(n, x1, y2, x3, y1, y3, y3);
+		sierpinski(n, xVertex[0], xVertex[1], xVertex[2], yVertex[0], yVertex[1], yVertex[2]);
 	}
 	
 	// Does the actual drawing, recursively.
-	private static void sierpinski(int n, double x1, double y2, double x3,
-		                                 double y1, double yy, double y3) {
-		if (n==0) return;
+	private static void sierpinski(int n, double x1, double x2, double x3,
+		                                 double y1, double y2, double y3) {
 
+		if (n<=0) return;
 
-		StdDraw.point(x1, y1);
-		StdDraw.point(x2, y2);
-		StdDraw.point(x3, y3);
+		StdDraw.line(x1, y1, x2, y2);
+		StdDraw.line(x2, y2, x3, y3);
+		StdDraw.line(x3, y3, x1, y1);
 
+		//top
+		sierpinski(n-1, (x1+x3)/2.0, (x2+x3)/2.0, x3, (y1+y3)/2.0, (y2+y3)/2.0, y3);
 
-		sierpinski(n-1, x1, x2, x3, y1, y2, y3);
+		//left
+		sierpinski(n-1, x1, (x1+x2)/2.0, (x1+x3)/2.0, y1, (y1+y2)/2.0, (y1+y3)/2.0);
+		
+		//right
+		sierpinski(n-1, (x1+x2)/2.0, x2, (x3+x2)/2.0, (y1+y2)/2.0, y2, (y2+y3)/2.0);
+
 	}
 }
