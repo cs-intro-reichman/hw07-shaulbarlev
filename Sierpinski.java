@@ -35,12 +35,15 @@ public class Sierpinski {
 		StdDraw.line(x3, y3, x1, y1);
 
 		//top
+		StdDraw.setPenColor(StdDraw.RED);
 		sierpinski(n-1, (x1+x3)/2.0, (x2+x3)/2.0, x3, (y1+y3)/2.0, (y2+y3)/2.0, y3);
 
 		//left
+		StdDraw.setPenColor(StdDraw.GREEN);
 		sierpinski(n-1, x1, (x1+x2)/2.0, (x1+x3)/2.0, y1, (y1+y2)/2.0, (y1+y3)/2.0);
 		
 		//right
+		StdDraw.setPenColor(StdDraw.BLUE);
 		sierpinski(n-1, (x1+x2)/2.0, x2, (x3+x2)/2.0, (y1+y2)/2.0, y2, (y2+y3)/2.0);
 
 	}
